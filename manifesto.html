@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写给同路人的一封信 · 错题局</title>
+<meta name="description" content="关于错题局背后的想法：学习、AI 的边界、产品的克制，以及我在找什么样的人。">
+<style>
+  :root {
+    --paper: #F7F3E8;
+    --ink: #2A2438;
+    --ink-muted: #6E6685;
+    --yellow: #FFE9A8;
+    --green: #58A85C;
+    --beige: #E3DCC8;
+    --orange: #F7A94E;
+    --red: #E0614F;
+    --white: #FFFFFF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.9;
+  }
+  .mono { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: .12em; }
+
+  .nav {
+    max-width: 760px; margin: 0 auto; padding: 28px 24px 0;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav a { color: var(--ink); font-weight: 900; text-decoration: none; font-size: 15px; }
+  .nav a:hover { text-decoration: underline; }
+  .nav .cat { font-size: 28px; }
+
+  .letter { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: .2em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 12px; }
+  h1 { font-size: 40px; font-weight: 900; line-height: 1.3; margin-bottom: 24px; }
+  .date { color: var(--ink-muted); font-size: 14px; margin-bottom: 48px; }
+
+  .letter p { margin-bottom: 22px; font-size: 17px; }
+  .letter p strong { background: var(--yellow); padding: 1px 4px; }
+  h2 { font-size: 26px; font-weight: 900; margin: 56px 0 20px; padding-left: 18px; border-left: 8px solid var(--orange); line-height: 1.4; }
+
+  .px-card {
+    background: var(--white); border: 3px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink); padding: 26px 28px; margin: 28px 0;
+  }
+  .px-card h3 { font-size: 19px; font-weight: 900; margin-bottom: 10px; }
+  .px-card p { font-size: 16px; margin-bottom: 0; }
+  .px-card p + p { margin-top: 12px; }
+  .belief-num {
+    display: inline-block; background: var(--ink); color: var(--paper);
+    font-weight: 900; padding: 2px 12px; margin-bottom: 12px; font-size: 14px;
+  }
+
+  .roles { list-style: none; margin: 20px 0; }
+  .roles li {
+    background: var(--white); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink);
+    padding: 16px 20px; margin-bottom: 14px; font-size: 16px;
+  }
+  .roles li b { display: block; font-size: 17px; margin-bottom: 4px; }
+  .roles li span { color: var(--ink-muted); font-size: 15px; }
+
+  .sign { margin-top: 64px; }
+  .sign .name { font-size: 22px; font-weight: 900; }
+  .px-btn {
+    display: inline-block; background: var(--yellow); border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink); padding: 14px 28px; font-weight: 900; font-size: 17px;
+    color: var(--ink); text-decoration: none; transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .px-btn:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--ink); }
+
+  footer { max-width: 760px; margin: 0 auto; padding: 0 24px 72px; text-align: center; }
+  footer .mono { font-size: 12px; color: var(--ink-muted); }
+  footer a { color: var(--ink); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html">← 回到错题局</a>
+  <span class="cat">🐱</span>
+</nav>
+
+<article class="letter">
+  <p class="kicker">A LETTER TO LIKE-MINDED PEOPLE</p>
+  <h1>写给同路人的一封信</h1>
+  <p class="date">2026 年 8 月 · 错题局作者</p>
+
+  <p>你好，谢谢你点开这封信。</p>
+
+  <p>我正在做一个叫「错题局」的产品：面向高中生的学习复盘工具。学生把错题拍下来，记下当时怎么想的，然后在接下来的 1、3、7、14、30 天里，把这道题一遍遍「讲」给一只叫小菊的橘猫听，直到真正不再错。</p>
+
+  <p>产品介绍在<a href="index.html">主页</a>上已经写了很多，这封信想说的是另一件事：<strong>我为什么要做它，我相信什么，以及我在找什么样的人。</strong></p>
+
+  <h2>一、错题是最被浪费的学习资源</h2>
+
+  <p>几乎每个高中生都有一本错题本，几乎每个错题本的下场都一样：抄得工工整整，然后塞进纸箱，再也没翻开过。</p>
+
+  <p>这不怪学生。传统错题本只记下了「题」和「答案」，却丢掉了最有价值的东西——<strong>你当时是怎么想的</strong>。是忘了看定义域？是符号抄错？还是根本没想到要分类讨论？一道错题其实是一份关于「你如何思考」的情报，而大多数错题本，把情报扔了，只留下了尸体。</p>
+
+  <p>我想做一个把这份情报留下来的工具。</p>
+
+  <h2>二、「讲出来」比「再看一遍」有用得多</h2>
+
+  <p>看懂答案和会做一道题，中间隔着一条巨大的鸿沟。很多人都有过这种体验：看答案时频频点头，合上答案一片空白。</p>
+
+  <p>所以错题局的复习方式不是「再看一遍」，而是「讲出来」——只看原题，按住话筒，把思路从头到尾讲清楚。能讲明白，才是真的会了。讲不出来的地方，就是你真正没掌握的地方，值得记下来，下次专门从这里开始。</p>
+
+  <h2>三、AI 应该是伙伴，不是答案机</h2>
+
+  <p>这两年 AI 学习产品很多，但大多数在做同一件事：更快地给学生答案。拍照搜题、整卷批改、AI 讲题……效率确实高了，可我总觉得哪里不对——<strong>如果 AI 把思考都代劳了，学生还学什么？</strong></p>
+
+  <p>错题局里的 AI 叫小菊，它有严格的边界：倾听、转写、在你卡住时给有限的提示、记录你每次卡在哪里。它不做完整解答，不当裁判——是不是真的会了，永远由学生自己确认。</p>
+
+  <p>我相信克制的 AI 比全能的 AI 更有价值。工具的责任是让人变强，而不是让人离不开工具。</p>
+
+  <h2>四、学习产品不该靠制造焦虑活着</h2>
+
+  <p>打开很多学习 App，迎面而来的是正确率、排名、击败了多少人、还有多少天考试。这些设计在利用焦虑，而焦虑换来的打开率，代价是学生的心理状态。</p>
+
+  <p>错题局的仪表盘有一条原则：<strong>首页只放你今天能改变的事。</strong>连续坚持的天数、今天通关了几道题、比上周多做了几道题——全是正向的、可行动的信号。没有红字警告，没有正确率排名。哪天没坚持，小菊不说「你失败了」，只说「等你回来」。</p>
+
+  <p>长期主义的产品，应该配得上长期主义的设计。</p>
+
+  <h2>五、你的数据是你的</h2>
+
+  <p>学习记录是一个学生最私密的数据之一——它记录了你在哪里跌倒、怎么爬起来的。这样的数据不该被锁在某个公司的服务器里，更不该成为别人的资产。</p>
+
+  <p>所以错题局从第一天起就定了几条规矩：学生的数据可以完全导出；接口对 AI 友好，你可以授权自己的 AI 助手来读自己的数据（按范围授权、随时吊销、每次调用都有记录）；我们永远不开放他人的数据，也永远不做数据买卖。</p>
+
+  <p>在 Agent 时代，我希望这是一个「用户带着自己的 AI 来用」的产品，而不是一个把用户关起来的产品。</p>
+
+  <h2>六、克制是路线图的一部分</h2>
+
+  <p>错题局有一份「不做清单」：不做全科 AI 老师、不做拍照搜题、不做排行榜、不做用户画像、不抓取第三方题库。这份清单和功能清单一样长，也一样重要。</p>
+
+  <p>我见过太多产品死于「什么都能做一点」。先把「入题」和「复习」这两件事做到足够好，再谈其他。</p>
+
+  <h2>我在找什么样的人</h2>
+
+  <p>这个项目还在早期，我希望找到一些同路人：</p>
+
+  <ul class="roles">
+    <li><b>🎨 设计师</b><span>喜欢像素风、认同「可爱也是生产力」，愿意一起打磨 G1–G8 这套设计语言和小菊的形象。</span></li>
+    <li><b>🛠 开发者</b><span>对 Flutter 或 Python 后端有经验，更重要的是认同「克制的 AI」这个方向，愿意用 TDD 的方式认真写代码。</span></li>
+    <li><b>📚 教育工作者</b><span>老师、教研、或者只是特别懂高中生的人。错题复盘的真实场景长什么样，你们最有发言权。</span></li>
+    <li><b>🎒 第一批学生用户</b><span>如果你正在读高中，愿意用最原始的方式帮我们验证产品——用、骂、提意见——那你是这个星球上对我们最重要的人。</span></li>
+    <li><b>✍️ 传播者</b><span>如果这些理念说到了你心里，把这封信转给可能会感兴趣的人，就是最大的帮助。</span></li>
+  </ul>
+
+  <h2>怎么找到我</h2>
+
+  <p>目前最简单的联系方式是 GitHub：在 <a href="https://github.com/Gongwu-uu">@Gongwu-uu</a> 的主页能找到我，也欢迎到<a href="https://github.com/Gongwu-uu/cuotiju-landing">这个站点的仓库</a>提 Issue 聊聊——聊产品、聊理念、聊学习本身都可以。</p>
+
+  <p>如果你只记住这封信里的一句话，我希望是这句：</p>
+
+  <div class="px-card">
+    <span class="belief-num">最后</span>
+    <h3>错题不是耻辱，是还没通关的关卡。</h3>
+    <p>学习如此，做产品如此，人生大概也如此。如果你也这么觉得，我们大概率聊得来。</p>
+  </div>
+
+  <div class="sign">
+    <p class="name">错题局作者</p>
+    <p style="color:var(--ink-muted);font-size:15px;">和小菊一起 🐱</p>
+    <p style="margin-top:24px;"><a class="px-btn" href="index.html">← 回到错题局主页</a></p>
+  </div>
+</article>
+
+<footer>
+  <p class="mono">CUOTIJU · A LETTER TO LIKE-MINDED PEOPLE · 2026</p>
+</footer>
+
+</body>
+</html>

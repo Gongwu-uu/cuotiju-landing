@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>错题局 · 把每一道错题，变成下一次的得分</title>
-<meta name="description" content="错题局是面向高中生的学习复盘产品：拍照收集错题，保留当时的思路与错因，通过主动口述、受限 AI 提示和间隔复习，减少同类错误。">
+<title>错题局 · 错题不是耻辱，是还没通关的关卡</title>
+<meta name="description" content="错题局是面向高中生的学习复盘产品：让每一道错题，都变成下一次的得分。">
 <style>
   :root {
     --paper: #F7F3E8;
@@ -28,7 +28,6 @@
   }
   .mono { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: .12em; }
 
-  /* ---------- 像素组件语言 ---------- */
   .px-card {
     background: var(--white);
     border: 3px solid var(--ink);
@@ -48,6 +47,7 @@
   }
   .px-btn:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--ink); }
   .px-btn:active { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--ink); }
+  .px-btn.ghost { background: var(--white); }
   .px-tag {
     display: inline-block;
     border: 2px solid var(--ink);
@@ -56,25 +56,15 @@
     font-weight: 700;
     background: var(--white);
   }
-  .dots { display: inline-flex; gap: 5px; }
-  .dots i { width: 12px; height: 12px; border: 2px solid var(--ink); background: var(--beige); display: inline-block; }
-  .dots i.on { background: var(--green); }
 
   section { max-width: 1120px; margin: 0 auto; padding: 96px 24px; }
   .kicker { font-size: 13px; font-weight: 700; letter-spacing: .2em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 12px; }
   h2 { font-size: 38px; font-weight: 900; line-height: 1.25; margin-bottom: 18px; }
-  .lead { font-size: 18px; color: var(--ink-muted); max-width: 640px; }
+  .lead { font-size: 18px; color: var(--ink-muted); max-width: 680px; }
+  .lead strong { color: var(--ink); }
 
-  /* ---------- Hero ---------- */
-  .hero {
-    max-width: none;
-    padding: 0;
-    border-bottom: 3px solid var(--ink);
-    background:
-      linear-gradient(transparent 0 0),
-      var(--paper);
-    position: relative;
-  }
+  /* Hero */
+  .hero { max-width: none; padding: 0; border-bottom: 3px solid var(--ink); position: relative; }
   .hero-inner {
     max-width: 1120px; margin: 0 auto; padding: 72px 24px 88px;
     display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center;
@@ -83,17 +73,12 @@
   .hud .px-tag { background: var(--ink); color: var(--paper); }
   h1 { font-size: 64px; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
   .hero-sub { font-size: 21px; font-weight: 700; margin-bottom: 6px; }
-  .hero-desc { color: var(--ink-muted); margin: 18px 0 30px; max-width: 480px; }
+  .hero-desc { color: var(--ink-muted); margin: 18px 0 30px; max-width: 500px; font-size: 16px; }
   .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
-  .px-btn.ghost { background: var(--white); }
   .hero-phone { justify-self: center; }
   .phone {
-    width: 264px;
-    border: 3px solid var(--ink);
-    box-shadow: 10px 10px 0 var(--ink);
-    background: var(--white);
-    padding: 6px;
-    transform: rotate(2deg);
+    width: 264px; border: 3px solid var(--ink); box-shadow: 10px 10px 0 var(--ink);
+    background: var(--white); padding: 6px; transform: rotate(2deg);
   }
   .phone img { width: 100%; display: block; }
   .pixel-deco { position: absolute; width: 14px; height: 14px; background: var(--ink); }
@@ -102,13 +87,13 @@
   .hp .bar i { width: 16px; height: 10px; border: 2px solid var(--ink); background: var(--beige); }
   .hp .bar i.on { background: var(--green); }
 
-  /* ---------- 数字带 ---------- */
+  /* 数字带 */
   .strip { border-bottom: 3px solid var(--ink); background: var(--yellow); }
   .strip-inner { max-width: 1120px; margin: 0 auto; padding: 26px 24px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
   .stat b { font-size: 30px; font-weight: 900; display: block; }
-  .stat span { font-size: 14px; color: var(--ink); font-weight: 700; }
+  .stat span { font-size: 14px; font-weight: 700; }
 
-  /* ---------- 闭环 ---------- */
+  /* 错题的旅程 */
   .loop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
   .loop .step { padding: 24px; position: relative; }
   .loop .num {
@@ -121,7 +106,7 @@
   .loop h3 { font-size: 19px; font-weight: 900; margin: 6px 0 8px; }
   .loop p { font-size: 15px; color: var(--ink-muted); }
 
-  /* ---------- 机制对比 ---------- */
+  /* 机制 */
   .mech { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 44px; }
   .mech .px-card { padding: 28px; }
   .mech h3 { font-size: 20px; font-weight: 900; margin-bottom: 14px; }
@@ -137,7 +122,7 @@
   }
   .intervals b em { display: block; font-size: 11px; font-style: normal; font-weight: 700; color: var(--ink-muted); }
 
-  /* ---------- G 套展示 ---------- */
+  /* G 套展示 */
   .gallery-wrap { background: var(--ink); border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); }
   .gallery-wrap section { color: var(--paper); }
   .gallery-wrap .lead { color: #B9B2CC; }
@@ -148,7 +133,7 @@
   .shot figcaption { font-size: 13px; font-weight: 700; color: var(--ink); padding: 8px 4px 4px; }
   .shot figcaption em { font-style: normal; color: var(--ink-muted); font-weight: 400; display: block; font-size: 12px; }
 
-  /* ---------- 仪表盘理念 ---------- */
+  /* 仪表盘理念 */
   .dash { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: center; margin-top: 44px; }
   .dash .principles { display: grid; gap: 18px; }
   .principle { padding: 20px 22px; }
@@ -156,7 +141,7 @@
   .principle p { font-size: 14px; color: var(--ink-muted); }
   .principle .badge { font-size: 22px; margin-right: 8px; }
 
-  /* ---------- 小菊 ---------- */
+  /* 小菊 */
   .mascot { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 44px; }
   .mascot img { width: 100%; border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); background: var(--white); }
   .quotes { display: grid; gap: 14px; margin-top: 20px; }
@@ -165,17 +150,20 @@
   .quote.w { background: var(--white); }
   .quote.o { background: #FDEBD2; }
 
-  /* ---------- 技术 ---------- */
-  .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; margin-top: 44px; }
-  .tech-grid .px-card { padding: 26px; }
-  .tech-grid h3 { font-size: 18px; font-weight: 900; margin-bottom: 10px; }
-  .tech-grid p, .tech-grid li { font-size: 14px; color: var(--ink-muted); }
-  .tech-grid ul { list-style: none; margin-top: 6px; }
-  .tech-grid li { padding: 4px 0 4px 22px; position: relative; }
-  .tech-grid li::before { content: "▸"; position: absolute; left: 0; color: var(--orange); font-weight: 900; }
-  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  /* 我们相信 */
+  .beliefs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+  .belief { padding: 26px; }
+  .belief .badge { font-size: 30px; }
+  .belief h3 { font-size: 18px; font-weight: 900; margin: 10px 0 8px; }
+  .belief p { font-size: 14px; color: var(--ink-muted); }
+  .letter-cta {
+    margin-top: 40px; padding: 34px; display: flex; justify-content: space-between;
+    align-items: center; gap: 24px; flex-wrap: wrap; background: var(--yellow);
+  }
+  .letter-cta h3 { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
+  .letter-cta p { font-size: 15px; color: var(--ink); max-width: 520px; }
 
-  /* ---------- 不做清单 ---------- */
+  /* 不做清单 */
   .nope { background: var(--beige); border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); }
   .nope-list { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   .nope-list span {
@@ -184,15 +172,15 @@
     text-decoration-thickness: 3px; text-decoration-color: var(--red);
   }
 
-  /* ---------- Footer ---------- */
   footer { max-width: 1120px; margin: 0 auto; padding: 64px 24px 80px; text-align: center; }
   footer .cat { font-size: 56px; display: block; margin-bottom: 12px; }
   footer p { color: var(--ink-muted); font-size: 14px; }
+  footer a { color: var(--ink); font-weight: 700; }
   footer .mono { font-size: 12px; color: var(--ink-muted); display: block; margin-top: 10px; }
 
   @media (max-width: 900px) {
     .hero-inner, .dash, .mascot { grid-template-columns: 1fr; }
-    .loop, .mech, .tech-grid { grid-template-columns: 1fr; }
+    .loop, .mech, .beliefs { grid-template-columns: 1fr; }
     .gallery { grid-template-columns: repeat(2, 1fr); }
     h1 { font-size: 44px; }
     h2 { font-size: 30px; }
@@ -216,14 +204,15 @@
         </span>
       </div>
       <h1>错题局</h1>
-      <p class="hero-sub">把每一道错题，变成下一次的得分。</p>
+      <p class="hero-sub">错题不是耻辱，是还没通关的关卡。</p>
       <p class="hero-desc">
-        面向高中生的学习复盘产品。拍照收集错题，保留你<strong>当时的思路与错因</strong>，
-        再通过主动口述、受限 AI 提示和 1·3·7·14·30 天间隔复习，帮你不再犯同类错误。
+        几乎每个高中生都有一本错题本。但说实话，大多数错题本的最后归宿，
+        是《五年高考三年模拟》旁边的纸箱——抄得工工整整，再也没翻开过。
+        错题局想换一种玩法：<strong>让每一道错题，都变成下一次的得分。</strong>
       </p>
       <div class="hero-cta">
         <a class="px-btn" href="#screens">▶ 看看长什么样</a>
-        <a class="px-btn ghost" href="#loop">它是怎么工作的</a>
+        <a class="px-btn ghost" href="manifesto.html">✉ 写给同路人的信</a>
       </div>
     </div>
     <div class="hero-phone">
@@ -235,57 +224,57 @@
 <!-- ================= 数字带 ================= -->
 <div class="strip">
   <div class="strip-inner">
-    <div class="stat"><b>2 件事</b><span>产品骨架：入题 + 复习</span></div>
+    <div class="stat"><b>2 件事</b><span>只做入题和复习，不多做</span></div>
     <div class="stat"><b>4 科</b><span>数学 · 物理 · 化学 · 生物</span></div>
-    <div class="stat"><b>5 档间隔</b><span>1 / 3 / 7 / 14 / 30 天</span></div>
+    <div class="stat"><b>5 次相遇</b><span>一道错题，陪你遇见 5 次</span></div>
     <div class="stat"><b>1 只猫</b><span>AI 伙伴「小菊」陪你复盘</span></div>
   </div>
 </div>
 
-<!-- ================= 核心闭环 ================= -->
+<!-- ================= 一道错题的旅程 ================= -->
 <section id="loop">
   <p class="kicker">CORE LOOP</p>
-  <h2>核心闭环：从拍下一道错题，<br>到真正不再错</h2>
-  <p class="lead">不做通用搜题，不做 AI 解题助手。错题局只做一件事——让「你自己的错误思路」被看见、被讲出来、被间隔复习真正消化掉。</p>
+  <h2>一道错题的旅程</h2>
+  <p class="lead">错题的价值不在那道题，而在<strong>你当时是怎么想的</strong>。错题局的全部设计，都围绕这一件事。</p>
   <div class="loop">
-    <div class="px-card step"><span class="num">1</span><h3>拍照录题</h3><p>连拍模式一次收多张，拍完统一处理，不打断做题节奏。</p></div>
-    <div class="px-card step"><span class="num">2</span><h3>OCR 提取</h3><p>从照片中提取题目文字，原图与识别结果分开保存。</p></div>
-    <div class="px-card step"><span class="num">3</span><h3>生成错题卡</h3><p>类似 Anki 的错题卡：题目 + 标准过程 + 你的思路。</p></div>
-    <div class="px-card step"><span class="num">4</span><h3>写下错因</h3><p>当时怎么想、为什么错、下次注意什么——这才是复盘的灵魂。</p></div>
-    <div class="px-card step"><span class="num">5</span><h3>口述复习</h3><p>只看原题不看答案，按住讲题。小菊倾听、转写、有限提示。</p></div>
-    <div class="px-card step"><span class="num">6</span><h3>间隔调度</h3><p>按作答结果安排下一次复习：做对推进，做错次日再来。</p></div>
+    <div class="px-card step"><span class="num">1</span><h3>随手拍下来</h3><p>考场上、作业里遇到的错题，连拍模式一口气收进来，不打断做题的节奏。</p></div>
+    <div class="px-card step"><span class="num">2</span><h3>它读懂题目</h3><p>照片里的题目被自动识别成文字，原图也替你收好，随时能回看。</p></div>
+    <div class="px-card step"><span class="num">3</span><h3>变成错题卡</h3><p>一道题一张卡：题目、标准过程，还有最重要的——你的思路。</p></div>
+    <div class="px-card step"><span class="num">4</span><h3>记下当时怎么错的</h3><p>是忘了看定义域？还是抄错了符号？写下那一刻的想法，这才是复盘的灵魂。</p></div>
+    <div class="px-card step"><span class="num">5</span><h3>讲出来，而不是再看一遍</h3><p>复习时只看题、不看答案，按住话筒把思路讲给小菊听。能讲清楚，才是真的会了。</p></div>
+    <div class="px-card step"><span class="num">6</span><h3>在对的时间再见</h3><p>做对了，它过几天再来考你一次；做错了，明天就再见。直到这道题再也难不倒你。</p></div>
   </div>
 </section>
 
-<!-- ================= 机制 ================= -->
+<!-- ================= 规矩 ================= -->
 <section>
   <p class="kicker">HOW IT WORKS</p>
-  <h2>可解释的机制，有边界的 AI</h2>
-  <p class="lead">复习规则简单到能跟学生讲清楚；AI 是受限的复习伙伴，不是最终裁决者。</p>
+  <h2>我们的规矩，简单到可以讲给你听</h2>
+  <p class="lead">不搞黑箱算法，不故弄玄虚。复习规则一句话能讲完，AI 能做什么、不能做什么，写得明明白白。</p>
   <div class="mech">
     <div class="px-card">
-      <h3>📅 1·3·7·14·30 天间隔复习</h3>
+      <h3>📅 一道错题，陪你遇见 5 次</h3>
       <ul>
-        <li>做错后，次日继续复习</li>
-        <li>再次做错，下一天继续</li>
-        <li>做对后，推进到下一个间隔</li>
-        <li>每轮都由你确认「独立做对」才推进</li>
+        <li>做错了？没关系，明天再见一次</li>
+        <li>又错了？那就后天再来</li>
+        <li>做对了，隔更久再考你</li>
+        <li>每一轮都要你亲口确认「独立做对」才算数</li>
       </ul>
       <div class="intervals">
         <b>1<em>天</em></b><b>3<em>天</em></b><b>7<em>天</em></b><b>14<em>天</em></b><b>30<em>天</em></b>
       </div>
     </div>
     <div class="px-card">
-      <h3>🐱 小菊能做什么 / 不做什么</h3>
+      <h3>🐱 小菊会做 / 不会做的事</h3>
       <ul>
-        <li>倾听你的口述并实时转写</li>
-        <li>检查定义域等关键步骤，粗判思路</li>
-        <li>卡住时先鼓励，再给有限提示</li>
-        <li>记录每次卡点，供下次复习使用</li>
+        <li>认真听你讲题，帮你把话转成文字</li>
+        <li>提醒你「定义域是不是忘了看」</li>
+        <li>你卡住的时候，先鼓励，再给提示</li>
+        <li>记住你每次卡在哪儿</li>
       </ul>
       <ul class="no">
-        <li>不生成完整解法，不替你做题</li>
-        <li>不做最终裁决——是否真正掌握，你说了算</li>
+        <li>不直接给答案，不替你做题</li>
+        <li>不当裁判——是不是真的会了，你说了算</li>
       </ul>
     </div>
   </div>
@@ -296,32 +285,32 @@
   <section>
     <p class="kicker" style="color:#B9B2CC;">PIXEL SCREENS · G1–G8</p>
     <h2 style="color:var(--paper);">像素闯关 · 错题怪兽</h2>
-    <p class="lead">错题是怪兽，复习是闯关。整套界面采用像素风设计：米色纸底、墨色描边、硬阴影，全部页面 412×915 画板在 Sketch 中完成，并已用 Flutter 实现。</p>
+    <p class="lead">在错题局里，错题是怪兽，复习是闯关，连续学习是在喂养一只叫小菊的猫。学习已经够苦了，工具至少要可爱一点。</p>
     <div class="gallery">
       <figure class="shot"><img src="assets/screens/g1-home.png" alt="G1 主页"><figcaption>G1 · 主页<em>错题怪兽出现了，准备开战</em></figcaption></figure>
       <figure class="shot"><img src="assets/screens/g2-capture.png" alt="G2 连拍"><figcaption>G2 · 连拍<em>对准错题，连拍后统一处理</em></figcaption></figure>
       <figure class="shot"><img src="assets/screens/g3-process.png" alt="G3 统一处理"><figcaption>G3 · 统一处理<em>学科识别、错因备注一站搞定</em></figcaption></figure>
-      <figure class="shot"><img src="assets/screens/g4-review.png" alt="G4 复习页"><figcaption>G4 · 复习页<em>按住讲题，四档自评</em></figcaption></figure>
+      <figure class="shot"><img src="assets/screens/g4-review.png" alt="G4 复习页"><figcaption>G4 · 复习页<em>按住讲题，讲完给自己评一档</em></figcaption></figure>
       <figure class="shot"><img src="assets/screens/g5-clear.png" alt="G5 完成页"><figcaption>G5 · 完成页<em>STAGE CLEAR! 战报结算</em></figcaption></figure>
-      <figure class="shot"><img src="assets/screens/g6-dashboard.png" alt="G6 仪表盘"><figcaption>G6 · 仪表盘<em>坚持了吗 · 下一步做什么</em></figcaption></figure>
-      <figure class="shot"><img src="assets/screens/g7-book.png" alt="G7 错题本"><figcaption>G7 · 错题本<em>筛选、状态、待复盘一目了然</em></figcaption></figure>
+      <figure class="shot"><img src="assets/screens/g6-dashboard.png" alt="G6 仪表盘"><figcaption>G6 · 仪表盘<em>今天坚持了没 · 下一步做什么</em></figcaption></figure>
+      <figure class="shot"><img src="assets/screens/g7-book.png" alt="G7 错题本"><figcaption>G7 · 错题本<em>所有错题，各有归宿</em></figcaption></figure>
       <figure class="shot"><img src="assets/screens/g8-settings.png" alt="G8 设置"><figcaption>G8 · 设置<em>提醒、语音提示、导出 PDF</em></figcaption></figure>
     </div>
   </section>
 </div>
 
-<!-- ================= 仪表盘理念 ================= -->
+<!-- ================= 不制造焦虑 ================= -->
 <section>
   <p class="kicker">MOTIVATION FIRST</p>
-  <h2>仪表盘：只给你看「能改变的事」</h2>
-  <p class="lead">2026-08-02 改版的激励优先设计。正确率一个月才动一次，行为每天都能动——所以首屏只放行为指标，不做负面对比。</p>
+  <h2>一个刻意不制造焦虑的仪表盘</h2>
+  <p class="lead">大多数学习产品喜欢用红色的数字提醒你「还不够好」。我们认真想过这个问题，然后做了一个相反的决定：<strong>首页只放你今天能改变的事。</strong></p>
   <div class="dash">
     <div class="phone" style="transform:rotate(-2deg);"><img src="assets/screens/g6-dashboard.png" alt="像素风仪表盘设计稿"></div>
     <div class="principles">
-      <div class="px-card principle"><h3><span class="badge">🐱</span>小菊陪伴卡</h3><p>第一眼看到的不是数据，而是「有人在等你」。文案随今日状态变化。</p></div>
-      <div class="px-card principle"><h3><span class="badge">🔥</span>连续天数 + 里程碑</h3><p>连续复习是主角：7 天 / 14 天 / 30 天解锁全勤徽章。断档不说「断了」，说「小菊等你回来」。</p></div>
-      <div class="px-card principle"><h3><span class="badge">✅</span>今日任务卡</h3><p>每天只有一个主按钮。完成后整卡变庆祝态：「✓ 今日已通关！」</p></div>
-      <div class="px-card principle"><h3><span class="badge">📈</span>成长记录，只放正向增量</h3><p>「本周已通关 12 题」「比上周多 3 题 ↑」。负 delta 不展示，学科百分比横条移出首屏。</p></div>
+      <div class="px-card principle"><h3><span class="badge">🐱</span>第一眼，是小菊在等你</h3><p>打开 App 先看到的是伙伴，不是成绩单。它的问候会随你今天的状态变化。</p></div>
+      <div class="px-card principle"><h3><span class="badge">🔥</span>连续天数是主角</h3><p>坚持 7 天、14 天、30 天都有徽章。哪天断了，它不说「你失败了」，只说「小菊等你回来」。</p></div>
+      <div class="px-card principle"><h3><span class="badge">✅</span>今天的事，今天就能完成</h3><p>每天只有一个主按钮。做完之后，整页都在为你庆祝：「✓ 今日已通关！」</p></div>
+      <div class="px-card principle"><h3><span class="badge">📈</span>只展示正在变好的事</h3><p>「本周已通关 12 题」「比上周多 3 题 ↑」。没有正确率排名，没有红字警告——那些数字一个月才变一次，只会天天扎心。</p></div>
     </div>
   </div>
 </section>
@@ -329,8 +318,8 @@
 <!-- ================= 小菊 ================= -->
 <section>
   <p class="kicker">MASCOT</p>
-  <h2>小菊：你的 Q 版复习伙伴</h2>
-  <p class="lead">一只橘猫，六种状态。它倾听、转写、给有限提示、记录卡点——卡住时它先鼓励，再提示。</p>
+  <h2>小菊：一只陪你复盘的橘猫</h2>
+  <p class="lead">它不会解题，但很会倾听。你讲题的时候它竖着耳朵，你卡住的时候它先鼓励再提示，你答对的时候它比你还开心。</p>
   <div class="mascot">
     <img src="assets/screens/mascot-states.png" alt="小菊的六种状态：打招呼、倾听中、思考中、答对啦、卡住了、别灰心">
     <div>
@@ -341,46 +330,39 @@
         <div class="px-card quote w">「小菊陪你再来一遍。」—— 别灰心</div>
       </div>
       <p style="margin-top:20px;font-size:14px;color:var(--ink-muted);">
-        打招呼 / 倾听中 / 思考中 / 答对啦 / 卡住了 / 别灰心——六种状态在复习对话中随你的表现切换。
+        打招呼 / 倾听中 / 思考中 / 答对啦 / 卡住了 / 别灰心——六种状态，跟着你的表现切换。
       </p>
     </div>
   </div>
 </section>
 
-<!-- ================= 技术与开放 ================= -->
+<!-- ================= 我们相信 + 同路人 ================= -->
 <section>
-  <p class="kicker">UNDER THE HOOD</p>
-  <h2>为 Agent 时代而建</h2>
-  <p class="lead">你的数据你做主：OpenAPI 是唯一契约，MCP 适配层让你自己的 AI 用 URL + 令牌即可接入。</p>
-  <div class="tech-grid">
-    <div class="px-card">
-      <h3>📱 客户端</h3>
-      <p>Flutter · Android 主终端，像素风设计 Token 由测试锁定。</p>
-      <div class="pill-row"><span class="px-tag">Flutter</span><span class="px-tag">Riverpod</span><span class="px-tag">Drift</span><span class="px-tag">96 项测试</span></div>
+  <p class="kicker">WE BELIEVE</p>
+  <h2>做这个产品的人，相信三件事</h2>
+  <div class="beliefs">
+    <div class="px-card belief">
+      <span class="badge">🌱</span>
+      <h3>错误值得被认真对待</h3>
+      <p>一道错题不是污点，是一份关于「你怎么思考」的情报。学习不是消灭错误，而是读懂错误。</p>
     </div>
-    <div class="px-card">
-      <h3>⚙️ 服务端</h3>
-      <p>模块化单体，OCR / ASR / 大模型走服务端薄适配层，官方托管，学生不碰 API Key。</p>
-      <div class="pill-row"><span class="px-tag">FastAPI</span><span class="px-tag">PostgreSQL</span><span class="px-tag">Pydantic v2</span><span class="px-tag">Alembic</span></div>
+    <div class="px-card belief">
+      <span class="badge">🤝</span>
+      <h3>AI 应该是伙伴，不是答案机</h3>
+      <p>直接给答案的 AI 让学生越来越懒。我们要做的是克制的 AI：倾听、提示、陪伴，把「学会」这件事留给人自己。</p>
     </div>
-    <div class="px-card">
-      <h3>🔑 数据主权</h3>
-      <ul>
-        <li>个人访问令牌按 scope 授权，可随时吊销</li>
-        <li>每次 Agent 调用都进审计日志</li>
-        <li>开放接口第一版只读，先读后写</li>
-        <li>全量导出是数据主权的一部分</li>
-      </ul>
+    <div class="px-card belief">
+      <span class="badge">🔑</span>
+      <h3>你的数据是你的</h3>
+      <p>学习记录是最私密的数据之一。它应该完全属于你——能看、能带走、能让自己的工具来读，随时说了算。</p>
     </div>
-    <div class="px-card">
-      <h3>🤖 Agent 友好</h3>
-      <ul>
-        <li>OpenAPI 为唯一契约，错误码语义化</li>
-        <li>MCP 适配层：URL + 令牌即可接入</li>
-        <li>托管形态为主，本地 CLI 为辅</li>
-        <li>不向 Agent 开放他人数据</li>
-      </ul>
+  </div>
+  <div class="px-card letter-cta">
+    <div>
+      <h3>✉ 写给同路人的一封信</h3>
+      <p>这个项目背后还有一些更完整的想法：关于学习、关于 AI 的边界、关于想做成一个什么样的产品。如果这些也是你在想的事，欢迎来聊聊。</p>
     </div>
+    <a class="px-btn" href="manifesto.html">读这封信 →</a>
   </div>
 </section>
 
@@ -388,12 +370,12 @@
 <div class="nope">
   <section>
     <p class="kicker">WHAT WE DON'T DO</p>
-    <h2>第一版明确不做</h2>
-    <p class="lead">克制也是产品定义的一部分。</p>
+    <h2>我们承诺不做的事</h2>
+    <p class="lead">在这个什么都要塞一点 AI、什么都要做排名的年代，「不做什么」和「做什么」一样重要。</p>
     <div class="nope-list">
-      <span>全科 AI 老师</span><span>通用搜题</span><span>完整解题助手</span>
-      <span>排行榜</span><span>公开比较错题数量</span><span>完整个人画像</span>
-      <span>全局知识图谱</span><span>自有硬件</span><span>抓取第三方题库</span>
+      <span>全科 AI 老师</span><span>拍照搜题</span><span>替你写作业</span>
+      <span>排行榜</span><span>公开比较谁错得多</span><span>给你贴标签画像</span>
+      <span>贩卖你的数据</span><span>制造焦虑</span><span>抓取别人的题库</span>
     </div>
   </section>
 </div>
@@ -401,9 +383,10 @@
 <!-- ================= FOOTER ================= -->
 <footer>
   <span class="cat">🐱</span>
-  <p><strong>错题局</strong> · 面向高中生的学习复盘产品</p>
-  <p>自己的错误思路 → 原题优先 → 多轮间隔独立做对 → 辨识题强化</p>
-  <span class="mono">PIXEL EDITION · DESIGNED IN SKETCH · BUILT WITH FLUTTER &amp; FASTAPI</span>
+  <p><strong>错题局</strong> · 让每一道错题，都变成下一次的得分</p>
+  <p>自己的错误思路 → 原题优先 → 多轮间隔独立做对 → 真正不再错</p>
+  <p style="margin-top:8px;"><a href="manifesto.html">✉ 写给同路人的信</a> · <a href="https://github.com/Gongwu-uu/cuotiju-landing">GitHub</a></p>
+  <span class="mono">PIXEL EDITION · DESIGNED WITH CARE · MADE FOR STUDENTS</span>
 </footer>
 
 </body>
