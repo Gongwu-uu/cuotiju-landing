@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>取舍笔记 · 错题局</title>
+<meta name="description" content="错题局的技术与产品取舍全记录：现在的目标、未来的目标、无奈放弃的东西，以及每一个决定背后的为什么。面向开发者。">
+<style>
+  :root {
+    --paper: #F7F3E8;
+    --ink: #2A2438;
+    --ink-muted: #6E6685;
+    --yellow: #FFE9A8;
+    --green: #58A85C;
+    --beige: #E3DCC8;
+    --orange: #F7A94E;
+    --red: #E0614F;
+    --white: #FFFFFF;
+    --dark: #1E1A2B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+  }
+  .mono { font-family: "SF Mono", Menlo, "Courier New", monospace; }
+
+  .nav { max-width: 1080px; margin: 0 auto; padding: 28px 24px 0; display: flex; justify-content: space-between; align-items: center; }
+  .nav a { color: var(--ink); font-weight: 900; text-decoration: none; font-size: 15px; }
+  .nav a:hover { text-decoration: underline; }
+  .nav .cat { font-size: 28px; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 24px 96px; }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: .2em; color: var(--ink-muted); text-transform: uppercase; margin-bottom: 12px; }
+  h1 { font-size: 44px; font-weight: 900; line-height: 1.25; margin-bottom: 16px; }
+  .lead { font-size: 18px; color: var(--ink-muted); max-width: 720px; }
+  .lead strong { color: var(--ink); }
+  section { margin-top: 88px; }
+  h2 { font-size: 30px; font-weight: 900; margin-bottom: 8px; }
+  .sub { color: var(--ink-muted); margin-bottom: 32px; max-width: 720px; }
+
+  /* 目标 */
+  .goals { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .goal { background: var(--white); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); padding: 28px; }
+  .goal.now { background: var(--yellow); }
+  .goal h3 { font-size: 20px; font-weight: 900; margin-bottom: 14px; }
+  .goal ul { list-style: none; }
+  .goal li { padding: 7px 0 7px 26px; position: relative; font-size: 15px; }
+  .goal li::before { content: "■"; position: absolute; left: 0; font-size: 11px; top: 11px; color: var(--ink); }
+  .goal.future li::before { color: var(--green); }
+  .goal .quote { margin-top: 16px; padding: 12px 14px; background: var(--paper); border: 2px solid var(--ink); font-size: 14px; font-weight: 700; }
+
+  /* 决策纪律 */
+  .rules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .rule { background: var(--dark); color: var(--paper); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); padding: 24px 26px; }
+  .rule .mono { font-size: 12px; color: var(--orange); letter-spacing: .15em; display: block; margin-bottom: 10px; }
+  .rule p { font-size: 16px; font-weight: 700; line-height: 1.7; }
+
+  /* 取舍卡片 */
+  .tradeoff { background: var(--white); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); margin-bottom: 34px; }
+  .tradeoff header { display: flex; align-items: center; gap: 14px; padding: 18px 26px; border-bottom: 3px solid var(--ink); background: var(--paper); flex-wrap: wrap; }
+  .tradeoff .no { font-family: "SF Mono", Menlo, monospace; font-size: 13px; font-weight: 700; background: var(--ink); color: var(--paper); padding: 3px 10px; }
+  .tradeoff h3 { font-size: 20px; font-weight: 900; }
+  .tradeoff .status { margin-left: auto; font-size: 12px; font-weight: 900; padding: 3px 10px; border: 2px solid var(--ink); }
+  .status.decided { background: var(--green); color: var(--white); border-color: var(--ink); }
+  .status.open { background: var(--yellow); }
+  .tradeoff .body { padding: 22px 26px; display: grid; gap: 16px; }
+  .row { display: grid; grid-template-columns: 92px 1fr; gap: 14px; font-size: 15px; }
+  .row .label { font-weight: 900; font-size: 13px; padding-top: 2px; }
+  .row.chose .label { color: var(--green); }
+  .row.gave .label { color: var(--red); }
+  .row.trigger .label { color: var(--orange); }
+  .row p { color: var(--ink); }
+  .row p em { color: var(--ink-muted); font-style: normal; }
+  .tradeoff footer { padding: 12px 26px; border-top: 2px dashed var(--beige); font-size: 13px; color: var(--ink-muted); }
+  .tradeoff footer a { color: var(--ink); font-weight: 700; }
+
+  /* 放弃清单 */
+  .gavelist { display: grid; gap: 14px; }
+  .gave { background: var(--white); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); padding: 16px 22px; display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; align-items: center; }
+  .gave b { font-size: 16px; }
+  .gave span { color: var(--ink-muted); font-size: 14px; grid-column: 1; }
+  .gave .tag { grid-row: 1 / span 2; grid-column: 2; font-size: 12px; font-weight: 900; border: 2px solid var(--ink); padding: 4px 12px; background: var(--beige); white-space: nowrap; }
+  .gave .tag.back { background: var(--yellow); }
+
+  .docs-cta { background: var(--ink); color: var(--paper); border: 3px solid var(--ink); box-shadow: 8px 8px 0 rgba(42,36,56,.3); padding: 34px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .docs-cta h3 { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+  .docs-cta p { font-size: 15px; color: #B9B2CC; max-width: 520px; }
+  .px-btn { display: inline-block; background: var(--yellow); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); padding: 14px 28px; font-weight: 900; font-size: 17px; color: var(--ink); text-decoration: none; transition: transform .12s ease, box-shadow .12s ease; }
+  .px-btn:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--ink); }
+
+  footer.page { max-width: 1080px; margin: 0 auto; padding: 0 24px 72px; text-align: center; }
+  footer.page .mono { font-size: 12px; color: var(--ink-muted); }
+  footer.page a { color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 860px) {
+    .goals, .rules { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+    .row { grid-template-columns: 1fr; gap: 2px; }
+    .gave { grid-template-columns: 1fr; }
+    .gave .tag { grid-row: auto; grid-column: 1; justify-self: start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html">← 回到错题局</a>
+  <span class="cat">🐱</span>
+</nav>
+
+<div class="wrap">
+  <p class="kicker">TRADE-OFFS &amp; GOALS · FOR DEVELOPERS</p>
+  <h1>取舍笔记</h1>
+  <p class="lead">
+    做产品不是选「最好的方案」，而是在约束里选「最合适的方案」。
+    这一页公开错题局的全部重大取舍：<strong>现在的目标、未来的目标、放弃了什么、每一个决定背后的为什么</strong>。
+    所有「未拍板」也都如实标注——诚实比好看重要。
+  </p>
+
+  <!-- ================= 目标 ================= -->
+  <section>
+    <h2>🎯 目标坐标</h2>
+    <p class="sub">先搞清楚「现在要去哪」，才能理解每个取舍为什么合理。</p>
+    <div class="goals">
+      <div class="goal now">
+        <h3>现在：验证一个闭环</h3>
+        <ul>
+          <li>用约 50 人私测验证核心闭环：拍照录题 → 错题卡 → 记下错因 → 按结果调度复习</li>
+          <li>验证「讲给小菊听」的语音复习链路是否真的可行</li>
+          <li>用真实题目、真实口述、真实失败率，算出「可靠完成一次复习」的成本</li>
+          <li>不追求注册量——优先指标是持续使用、复习完成、错题减少</li>
+        </ul>
+        <p class="quote">「个人声誉与下一阶段机会 &gt; 真实高中生使用与自身学习；收入守住不长期亏损底线。」—— 12 个月成功定义</p>
+      </div>
+      <div class="goal future">
+        <h3>未来：从收件箱到掌握系统</h3>
+        <ul>
+          <li>近期：题型标签、考前突击、批量录入、照片标记提取</li>
+          <li>中期：FSRS 智能调度（替代固定间隔）、辨识题/变式题链路</li>
+          <li>中期：互惠制社区——共享换访问，但永远不是排行榜</li>
+          <li>远期：数据主权完全体——MCP 适配层 + 全量导出，用户带着自己的 AI 来用</li>
+          <li>愿景：错题减少 → 学习复盘 → 掌握系统，帮学生减少应试的重复耗时</li>
+        </ul>
+        <p class="quote">「最难复制的不是某个 OCR 或大模型 API，而是高中生日常现场的高频反馈循环。」—— 创始人本人就是在校高中生</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 决策纪律 ================= -->
+  <section>
+    <h2>📏 决策纪律</h2>
+    <p class="sub">所有取舍都遵守的四条元规则。</p>
+    <div class="rules">
+      <div class="rule"><span class="mono">RULE 01</span><p>先证明产品价值，再定义学习系统，再确定可持续边界，最后固化运营基础。跳过前一层直接选框架和模型，技术选择就建立在未确认的假设上。</p></div>
+      <div class="rule"><span class="mono">RULE 02</span><p>每一个「延后」都必须写下重新评估的触发条件。没有触发条件的「以后再说」，就是逃避决策。</p></div>
+      <div class="rule"><span class="mono">RULE 03</span><p>旧决策文档原位保留、不静默改写。方向反转时用新 ADR 说明取代关系——决策的历史本身就是资产。</p></div>
+      <div class="rule"><span class="mono">RULE 04</span><p>选型标准是「可靠完成一次任务的总成本」（含失败、重试、人工纠错），不是 Token 单价，更不是厂商榜单。</p></div>
+    </div>
+  </section>
+
+  <!-- ================= 取舍墙 ================= -->
+  <section>
+    <h2>⚖️ 取舍墙</h2>
+    <p class="sub">十个重大决策：选了什么、放弃了什么、什么时候会重新评估。</p>
+
+    <div class="tradeoff">
+      <header><span class="no">#01</span><h3>客户端：React PWA → Flutter，方向反转</h3><span class="status decided">已拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>最初定了 React + Vite PWA，想「链接即达」快速验证。但第一版核心交互是拍照、连拍、持续语音——这些在移动浏览器里处处受限。</p></div>
+        <div class="row chose"><span class="label">✅ 选了</span><p>Flutter + Android APK 作为第一版唯一主终端；Web 降级为静态宣传页（你正在看的这个站）。</p></div>
+        <div class="row gave"><span class="label">❌ 放弃</span><p><em>React 生态、链接即达的分发便利、Kotlin 原生（未来 iOS 要重写）、React Native（与「不引入 Node」约束冲突）。</em></p></div>
+        <div class="row trigger"><span class="label">🔄 重评</span><p>iOS 必须由新的范围决策启动，Flutter 只保留技术可能性。</p></div>
+      </div>
+      <footer>出处：<a href="docs/adr/flutter-android-primary-client.md">adr/flutter-android-primary-client.md</a> · 旧 React 条款原位保留在 <a href="docs/adr/v1-modular-monolith-and-base-stack.md">v1-modular-monolith</a> 中（决策纪律 RULE 03 的实例）</footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#02</span><h3>复习调度：固定间隔 vs FSRS</h3><span class="status decided">已拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>FSRS 是更「先进」的间隔重复算法，但参数复杂、对学生不可解释。</p></div>
+        <div class="row chose"><span class="label">✅ 选了</span><p>1·3·7·14·30 天固定间隔：做错次日再来，做对推进下一档。规则简单到能跟学生讲清楚。</p></div>
+        <div class="row gave"><span class="label">❌ 放弃</span><p><em>FSRS 高级信号、随机复习时间、响应时长优化——不是永久放弃，是「先可解释，后升级」。代码里完成 30 天轮次的状态必须叫 sequence_completed，禁止写 mastered——「掌握」要等辨识题链路验证。</em></p></div>
+        <div class="row trigger"><span class="label">🔄 重评</span><p>原型验证后的工程化阶段，迁移字段已预留。</p></div>
+      </div>
+      <footer>出处：<a href="docs/PRODUCT-BLUEPRINT.md">PRODUCT-BLUEPRINT.md</a> §2.3 / §2.10</footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#03</span><h3>托管：官方托管 vs BYOK（自带密钥）</h3><span class="status decided">已拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>BYOK 能让官方现金流压力归零，是开发者工具的常见选择。</p></div>
+        <div class="row chose"><span class="label">✅ 选了</span><p>官方统一托管 + Managed AI。高中生不该被要求「先去申请三个 API Key」才能开始复盘错题。</p></div>
+        <div class="row gave"><span class="label">❌ 放弃</span><p><em>BYOK、第一天同时支持自托管——认证、配置、测试、计费、支持的复杂度远超 50 人 Demo 所需。代价是官方承担供应商费用和滥用风险。</em></p></div>
+        <div class="row trigger"><span class="label">🔄 重评</span><p>出现真实的开发者 / 学校 / 隐私需求时。</p></div>
+      </div>
+      <footer>出处：<a href="docs/adr/official-hosted-backend-managed-ai.md">adr/official-hosted-backend-managed-ai.md</a></footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#04</span><h3>后端：模块化单体 vs 微服务</h3><span class="status decided">已拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>两段旧讨论留下了互相冲突的方案：FastAPI+PostgreSQL vs Next.js+NestJS+MySQL+Redis。</p></div>
+        <div class="row chose"><span class="label">✅ 选了</span><p>FastAPI 模块化单体 + PostgreSQL + 一张 ai_jobs 表 + 单 Python Worker。4 核 4G 小服务器跑 50 人私测，够了。</p></div>
+        <div class="row gave"><span class="label">❌ 放弃</span><p><em>NestJS 全栈 TS、Redis/BullMQ、微服务、独立 OCR 服务、Kubernetes——不为了「像大公司」而提前建设。任务表只实现状态机 + 重试 + 幂等键，防止它腐烂成自制消息队列。</em></p></div>
+        <div class="row trigger"><span class="label">🔄 重评</span><p>任务积压、并发消费、优先级被真实数据证明超出数据库方案时，新建 ADR 比较专业队列。</p></div>
+      </div>
+      <footer>出处：<a href="docs/adr/v1-modular-monolith-and-base-stack.md">adr/v1-modular-monolith-and-base-stack.md</a></footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#05</span><h3>AI 接入：能力薄适配 vs 通用 Gateway</h3><span class="status decided">已拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>AI 供应商能力和价格都在快速变化，直连单一 SDK 会把替换成本焊进核心流程。</p></div>
+        <div class="row chose"><span class="label">✅ 选了</span><p>按能力做薄适配层：只抽象第一版真用到的 OCR、实时语音、推理。允许保留供应商原始结果调试，但原始结果不成为权威业务状态。</p></div>
+        <div class="row gave"><span class="label">❌ 放弃</span><p><em>第一天就建通用 AI Gateway、为 Embedding / 变式题生成预建抽象——「不为抽象而预建」。可替换不等于零成本替换。</em></p></div>
+        <div class="row trigger"><span class="label">🔄 重评</span><p>动态路由有真实需求后另立 ADR。</p></div>
+      </div>
+      <footer>出处：<a href="docs/adr/ai-capability-adapters-and-cost-aware-routing.md">adr/ai-capability-adapters-and-cost-aware-routing.md</a></footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#06</span><h3>数据：自有底座 vs 供应商知识库</h3><span class="status decided">已拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>把业务数据建在 AI 供应商的知识库平台上，接入最快。</p></div>
+        <div class="row chose"><span class="label">✅ 选了</span><p>业务数据完全自有，供应商只提供处理能力、只接收完成当前任务所需的数据。错题局的核心状态是用户的长期复习历史和数据边界，不是某个供应商的模型输出。</p></div>
+        <div class="row gave"><span class="label">❌ 放弃</span><p><em>供应商知识库做主底座（复习状态、权限、分享规则难以准确表达，迁移成本极高）、全自研本地模型（算力与维护远超原型需要）。</em></p></div>
+      </div>
+      <footer>出处：<a href="docs/adr/self-controlled-business-data.md">adr/self-controlled-business-data.md</a></footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#07</span><h3>图片：原图保护策略</h3><span class="status decided">已拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>错题照片是学生的原始资产，但原图也是最占存储的东西。</p></div>
+        <div class="row chose"><span class="label">✅ 选了</span><p>原图与 OCR 衍生图分开保存；用户确认前绝不丢弃原图；云存储生命周期规则被明确禁止匹配原图前缀——防止云端规则绕过用户确认。</p></div>
+        <div class="row gave"><span class="label">❌ 放弃</span><p><em>只存黑白图省空间（可能丢失颜色、批注、图形信息）；题干不做 OCR，长期只存裁剪图——识别算力花在学生手写批注上。</em></p></div>
+        <div class="row trigger"><span class="label">🔄 重评</span><p>原图保留时长、存储额度、自动删除规则仍未定案。</p></div>
+      </div>
+      <footer>出处：<a href="docs/PRODUCT-BLUEPRINT.md">PRODUCT-BLUEPRINT.md</a> §2.9 / §8.3 · <a href="docs/architecture/v1-implementation-plan.md">v1-implementation-plan.md</a> §5</footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#08</span><h3>模型选型：讯飞 X2 vs DeepSeek</h3><span class="status open">未拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>需要推理底座 + OCR + 实时语音。X2 胜在教育行业资产与 OCR/语音一站式；DeepSeek 胜在通用推理、开放权重、成本和超长上下文。</p></div>
+        <div class="row chose"><span class="label">📋 计划</span><p>讯飞 OCR 独立做图像识别，同一份 OCR 文本同时喂给 X2 和 DeepSeek 对照：结构化准确率、标签一致性、错因质量、时延、真实成本。</p></div>
+        <div class="row gave"><span class="label">⚠️ 纪律</span><p><em>不能仅根据厂商榜单断言谁更适合；展会展示的教育能力 ≠ 已开放、可采购、有 SLA 的接口；国外模型可作质量上限对照，但不成为未经验证的默认生产依赖。</em></p></div>
+      </div>
+      <footer>出处：<a href="docs/PRODUCT-BLUEPRINT.md">PRODUCT-BLUEPRINT.md</a> §4.1–4.6 / §8.5</footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#09</span><h3>收费：成本控制点放在哪</h3><span class="status open">未拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>对标产品把「每月录题次数」做成付费墙——但录题是最需要培养的行为，给它设限会增加学生每次拍照的心理成本。</p></div>
+        <div class="row chose"><span class="label">📋 倾向</span><p>基础录入免费或非常宽松；轻量 AI 给大额度；深度 AI（整卷结构化、错因诊断）按点数；生成类（变式题、报告）独立增值包。把成本控制点放在昂贵的 AI 动作上，而不是「保存一道错题」。</p></div>
+        <div class="row gave"><span class="label">⚠️ 未决</span><p><em>学生还是家长付款、订阅还是点数、免费额度具体值；「核心行为免费」是否等于「无限云端调用免费」也需要拆开。</em></p></div>
+      </div>
+      <footer>出处：<a href="docs/PRODUCT-BLUEPRINT.md">PRODUCT-BLUEPRINT.md</a> §5.2–5.4</footer>
+    </div>
+
+    <div class="tradeoff">
+      <header><span class="no">#10</span><h3>开源：AI Coding 时代的护城河</h3><span class="status open">未拍板</span></header>
+      <div class="body">
+        <div class="row"><span class="label">背景</span><p>AI 让代码保密的价值下降，闭源不能作为主要护城河——那靠什么？</p></div>
+        <div class="row chose"><span class="label">📋 倾向</span><p>开源方法层（数据格式、调度引擎、适配接口、评测工具）+ 官方托管应用闭源。真正难复制的是：学生长期复习数据、真题验证的错因结构、成本控制、社区网络、迭代速度。</p></div>
+        <div class="row gave"><span class="label">⚠️ 纪律</span><p><em>不第一天承诺完整自托管——对高中生没有购买价值，只会产生安装、升级、安全和免费支持成本。对学生，开源要翻译成「数据可导出、不会被锁定」，而不是把许可证名称当卖点。</em></p></div>
+      </div>
+      <footer>出处：<a href="docs/PRODUCT-BLUEPRINT.md">PRODUCT-BLUEPRINT.md</a> §8.7 全部子节</footer>
+    </div>
+  </section>
+
+  <!-- ================= 放弃与后置 ================= -->
+  <section>
+    <h2>🗃 放弃与后置清单</h2>
+    <p class="sub">每一项都附原因。标「后置」的都有明确的重新评估触发条件——不是放弃，是排队。</p>
+    <div class="gavelist">
+      <div class="gave"><b>辨识题 / 变式题</b><span>学习机制的完全体需要它，但生成、求解、校验是独立链路，初期不实现</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>FSRS 智能调度</b><span>先用可解释的固定间隔验证产品，算法升级留到工程化阶段</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>iOS 端</b><span>Flutter 保留技术可能，但必须由新的范围决策启动</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>Web 业务端</b><span>React PWA 方案被整体放弃，Web 只留静态宣传页</span><span class="tag">已放弃</span></div>
+      <div class="gave"><b>实时可视化公式面板</b><span>「用户说什么面板就写什么」很酷，但第一版转写只是 AI 判断的内部输入</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>社区功能</b><span>互惠制原则已定，但共享字段、版权、未成年人合规全部待设计；数据库只预留 visibility 字段</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>标签体系</b><span>避免标签体系先于真实数据膨胀——字段保留但留空</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>Redis / 消息队列 / 微服务</b><span>数据库任务表够用就不引入专业队列，每项都有重评触发条件</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>BYOK / 自托管</b><span>对高中生门槛过高，出现真实需求再评估</span><span class="tag back">后置</span></div>
+      <div class="gave"><b>排行榜 / 个人画像 / 全科 AI 老师</b><span>与产品理念直接冲突，不是排期问题，是不做</span><span class="tag">已放弃</span></div>
+      <div class="gave"><b>抓取第三方题库</b><span>合规底线，任何时候都不做</span><span class="tag">已放弃</span></div>
+    </div>
+  </section>
+
+  <!-- ================= 文档入口 ================= -->
+  <section>
+    <div class="docs-cta">
+      <div>
+        <h3>📂 想看原始文档？</h3>
+        <p>以上每条取舍都链到了原文：产品蓝图、五篇 ADR、工程实施总纲，全部公开在本站仓库的 docs/ 目录。</p>
+      </div>
+      <a class="px-btn" href="https://github.com/Gongwu-uu/cuotiju-landing/tree/main/docs">读原始文档 →</a>
+    </div>
+  </section>
+</div>
+
+<footer class="page">
+  <p class="mono">CUOTIJU · TRADE-OFFS &amp; GOALS · <a href="index.html">主页</a> · <a href="manifesto.html">同路人的信</a> · <a href="https://github.com/Gongwu-uu/cuotiju-landing">GitHub</a></p>
+</footer>
+
+</body>
+</html>
